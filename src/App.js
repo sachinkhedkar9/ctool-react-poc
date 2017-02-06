@@ -5,6 +5,11 @@ import './App.css';
 export default class App extends React.Component {
     constructor(props, context) {
       super(props, context);
+      this.state = {};
+      this.state.user = {
+        name: 'sachin',
+        password: 'sachin'
+      };      
     }
      render() {
     return (
@@ -23,16 +28,16 @@ export default class App extends React.Component {
         <div className="login-container sap-form">
           <form className="form-signin content" name="loginForm">
             <h2 className="form-signin-heading">Login</h2>
-            <label className="text-block top-margin">User Name</label>
+            <label className="text-block top-margin">User Name<sup className="required"> *</sup></label>
             <input type="text" ref="username" className="form-control" 
-              placeholder="User Name" required=""  />
+              placeholder="User Name" required />
 
-            <label className="text-block top-margin">Password</label>
+            <label className="text-block top-margin">Password<sup className="required"> *</sup></label>
             <input type="password" ref="inputPassword"
-              className="form-control" placeholder="Password" required="" />
+              className="form-control" placeholder="Password" required />
 
             <button className="sap-btn sap-btn-primary btn-block" onClick={this.handleLogin.bind(this)}>Sign in</button>
-          </form>
+          </form>          
         </div>
 
 
@@ -50,7 +55,15 @@ export default class App extends React.Component {
   }
 
   handleLogin(){
-    this.context.router.push('create');
+    if(this.state.user.name == this.refs.username.value && this.state.user.password == this.refs.inputPassword.value){
+      console.log('Login Successful');
+      this.context.router.push('create');
+    }else {
+      if( this.refs.username.value !== null || this.refs.username.value !== ' '){
+        
+      }
+      alert('Login failed !!!');
+    }
   }
 }
 
