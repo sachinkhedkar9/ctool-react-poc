@@ -58,6 +58,7 @@ body {
     border-radius: 0;
     height: 32px; }
   .sap-form .table {
+    width: 100%;
     font-family: ArialMT;
     font-size: 14px;
     font-weight: normal;
@@ -149,4 +150,9 @@ li > button{
 .other-than-main{
   background: #FFFFFF;
   height: 100vh;
+}
+
+.custom-anchor:hover {
+  text-decoration: none;
+  cursor: pointer;
 }

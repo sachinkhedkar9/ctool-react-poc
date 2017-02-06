@@ -3,21 +3,14 @@
  */
 import React from 'react';
 import './App.css';
-import {commercialInformation} from './commercialInformation';
-import {technicalContact} from './technicalContact';
-import {accountNames} from './accountNames';
-
-console.log('a = ', commercialInformation);
-console.log('b = ', technicalContact);
-console.log('c = ', accountNames);
 
 export default class CreateAccount extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="other-than-main">
                 <nav className="navbar navbar-default navbar-static-top navbar-inverse">
                     <div className="container-fluid">
@@ -56,32 +49,99 @@ export default class CreateAccount extends React.Component {
 
                                     <h4 className="breadcrumbs">Commercial Information</h4>
                                     aaa
-                                    {commercialInformation}
+                                    <commercialInformation></commercialInformation>
 
                                 </div>
 
-                                <div ng-class="getTables" id="second-level">
-                                    <div class='content'>
+                                <div ng-className="getTables" id="second-level">
+                                    <div className='content'>
 
                                         <h4 className="breadcrumbs">Technical Details</h4>
-                                        bbb
-                                        {technicalContact}
+                                        <table className="CTOOL-table table table-condensed table-stripped form-group hr-extended">
+                                            <tbody>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Exsiting Company Contacts</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
+                                                        <div className="row">
+                                                            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                                                <select className="form-control" id="sel6"
+                                                                     ng-change="updateTechnicalDetails()">
+                                                                    <option>a</option>
+                                                                </select>
+                                                            </div>
+                                                            <div className="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                                                                <label>or  </label>
+                                                                <a className="custom-anchor">
+                                                                    &nbsp; create new
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Name</label><sup className="required">&nbsp;*</sup></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
+                                                        <div className="row">
+                                                            <div className="col-lg-6 col-md-6 col-sm-10 col-xs-12">
+                                                                <input className="form-control" type="text" name="name" required="Please enter name." ng-model="json.contact.name"></input>
+                                                            </div>
+                                                            <div className="col-lg-6 col-md-6 col-sm-1 col-xs-12"><label>(NEW)</label></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Email</label><sup className="required">&nbsp;*</sup></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
+                                                        <div className="row">
+                                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <input className="form-control" type="email" name="email" ng-model="json.contact.email" required></input>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Country</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
+                                                        <div className="row">
+                                                            <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <select className="form-control" id="sel7" ng-model="json.country">
+                                                                    <option>a</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Mobile Phone Number</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
+                                                        <div className="row">
+                                                            <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <input className="form-control" type="text" ng-model="json.contact.mobilePhoneNumber"></input>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
                                     </div>
 
                                     <div className='content'>
 
-                                        <h4  className="breadcrumbs">Account Name and Interfaces</h4>
+                                        <h4 className="breadcrumbs">Account Name and Interfaces</h4>
                                         ccc
                                         {accountNames}
 
                                     </div>
                                     <div className='content'>
                                         <button className="sap-btn sap-btn-primary" ng-click="showNextTables(!showNextFlag)">Back</button>
+                                        &nbsp;&nbsp;
                                         <button className="sap-btn sap-btn-primary" ng-click="create()">Next</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
+                            <div className="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
                         </form>
                     </section>
                 </div>
@@ -99,7 +159,7 @@ export default class CreateAccount extends React.Component {
             </div>
         )
     }
-    showAddress(){
+    showAddress() {
         this.context.router.push('address');
     }
 }

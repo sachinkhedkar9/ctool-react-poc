@@ -4,7 +4,7 @@
 import React from 'react';
 import './App.css';
 
-export default class accountNames extends React.Component {
+export class accountNames extends React.Component {
     render(){
         return (
             <h1>P3</h1>
