@@ -49,7 +49,6 @@ export default class CreateAccount extends React.Component {
 
                                     <h4 className="breadcrumbs">Commercial Information</h4>
                                     aaa
-                                    <commercialInformation></commercialInformation>
 
                                 </div>
 
@@ -131,7 +130,6 @@ export default class CreateAccount extends React.Component {
 
                                         <h4 className="breadcrumbs">Account Name and Interfaces</h4>
                                         ccc
-                                        {accountNames}
 
                                     </div>
                                     <div className='content'>
