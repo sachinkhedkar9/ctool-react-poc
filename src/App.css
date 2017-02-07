@@ -34,6 +34,7 @@ body {
 
 .content {
   background: #ffffff;
+  padding: 10px;
  }
 
 .sap-btn {
@@ -147,12 +148,20 @@ li > button{
   margin-top: 7px;
 }
 
-.other-than-main{
+/*.other-than-main{
   background: #FFFFFF;
   height: 100vh;
-}
+}*/
 
 .custom-anchor:hover {
   text-decoration: none;
   cursor: pointer;
+}
+
+.showSection-true{
+  display: block;
+}
+
+.showSection-false{
+  display: none;
 }

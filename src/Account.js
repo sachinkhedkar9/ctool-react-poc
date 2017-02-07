@@ -9,8 +9,10 @@ export default class CreateAccount extends React.Component {
         super(props, context);
         this.state = {};
         this.state.commercial = {};
+        this.state.step1 = true;
         this.state.account = {};
         this.state.technical = {};
+        this.state.json = {};
         this.state.commercial.users = [
             {
                 name: 'Adam Gilli',
@@ -87,9 +89,84 @@ export default class CreateAccount extends React.Component {
         ];
 
         this.state.existingAccounts = ['118118_Bulk_HTTP', '118119_Bulk_HTTP', '1181520_Bulk_HTTP', '118121_Bulk_HTTP'];
+        this.state.json = {
+            requesterName: this.state.requesterName,
+            acctMgr: this.state.commercial.users[0],
+            company: this.state.commercial.company[0],
+            billingLocation: this.state.commercial.billingLocation[0],
+            serviceLevel: this.state.commercial.serviceLevel[0],
+            trafficType: this.state.commercial.trafficType[0],
+            interfaceType: this.state.account.interfaceType[0],
+            techName: null,
+            existingCompany: "Xoriant sol.",
+            contact: 'saca',
+            existingAccount: this.state.existingAccounts[0]
 
+        }
+    }
 
+    handleChange(name, event) {
+        // this.setState({value: event.target.value});
+        // updateFinalData();
+        console.log('name -- ', name);
+        console.log('event -- ', event);
 
+        switch (name) {
+            case 'managerName':
+                var state = Object.assign(this.state, {
+                    json: Object.assign(this.state.json, { acctMgr: {name: event.target.value }}),
+                });
+
+                this.setState(state);
+                break;
+
+            case 'company':
+                var state = Object.assign(this.state, {
+                    json: Object.assign(this.state.json, { company: event.target.value }),
+                });
+
+                this.setState(state);
+                break;
+
+            case 'billingLocation':
+                var state = Object.assign(this.state, {
+                    json: Object.assign(this.state.json, { billingLocation: event.target.value }),
+                });
+
+                this.setState(state);
+                break;
+
+            case 'serviceLevel':
+                var state = Object.assign(this.state, {
+                    json: Object.assign(this.state.json, { serviceLevel: event.target.value }),
+                });
+
+                this.setState(state);
+                break;
+
+            case 'trafficType':
+                var state = Object.assign(this.state, {
+                    json: Object.assign(this.state.json, { trafficType:  event.target.value }),
+                });
+
+                this.setState(state);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    showStep2() {
+        this.setState({
+            step1: false
+        })
+    }
+
+    showStep1() {
+        this.setState({
+            step1: true
+        })
     }
 
     render() {
@@ -106,35 +183,35 @@ export default class CreateAccount extends React.Component {
             );
         });
 
-        var listBilingLocation = this.state.commercial.billingLocation.map(function(location){
+        var listBilingLocation = this.state.commercial.billingLocation.map(function (location) {
             return (
                 <option key={location} value={location}>{location}</option>
             );
-        }) 
+        })
 
-        var listServiceLevel = this.state.commercial.serviceLevel.map(function(level){
+        var listServiceLevel = this.state.commercial.serviceLevel.map(function (level) {
             return (
                 <option key={level} value={level}>{level}</option>
             );
-        }) 
+        })
 
-        var listTrafficType = this.state.commercial.trafficType.map(function(traffic){
+        var listTrafficType = this.state.commercial.trafficType.map(function (traffic) {
             return (
                 <option key={traffic} value={traffic}>{traffic}</option>
             );
-        }) 
+        })
 
-        var listExistingAccounts = this.state.existingAccounts.map(function(account){
+        var listExistingAccounts = this.state.existingAccounts.map(function (account) {
             return (
                 <option key={account} value={account}>{account}</option>
             );
-        }) 
+        })
 
-        var listInterface =  this.state.account.interfaceType.map(function(type){
+        var listInterface = this.state.account.interfaceType.map(function (type) {
             return (
                 <option key={type} value={type}>{type}</option>
             );
-        }) 
+        })
 
         return (
             <div className="other-than-main">
@@ -166,7 +243,7 @@ export default class CreateAccount extends React.Component {
 
                 <div className='sap-form'>
                     <section>
-                        <form className="ctoolControllerForm">
+                        
                             <div className="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
                             <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 ">
                                 <div className='content'>
@@ -187,7 +264,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                                <select className="form-control" id="sel1">
+                                                                <select className="form-control"
+                                                                    onChange={this.handleChange.bind(this, 'managerName')} ref="sel1">
                                                                     {listUsers}
                                                                 </select>
                                                             </div>
@@ -200,7 +278,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                                                                <select className="form-control" id="sel2">
+                                                                <select className="form-control" ref="sel2"
+                                                                        onChange={this.handleChange.bind(this, 'company')} >
                                                                     {listCompany}
                                                                 </select>
                                                             </div>
@@ -212,7 +291,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                <select className="form-control" id="sel3">
+                                                                <select className="form-control" ref="sel3"
+                                                                        onChange={this.handleChange.bind(this, 'billingLocation')} >
                                                                     {listBilingLocation}
                                                                 </select>
                                                             </div>
@@ -224,7 +304,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                                                                <select className="form-control" id="sel4">
+                                                                <select className="form-control" ref="sel4"
+                                                                        onChange={this.handleChange.bind(this, 'serviceLevel')} >
                                                                     {listServiceLevel}
                                                                 </select>
                                                             </div>
@@ -236,7 +317,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                                                                <select className="form-control" id="sel5">
+                                                                <select className="form-control" ref="sel5"
+                                                                        onChange={this.handleChange.bind(this, 'trafficType')} >
                                                                     {listTrafficType}
                                                                 </select>
                                                             </div>
@@ -250,52 +332,55 @@ export default class CreateAccount extends React.Component {
 
                                             </tbody>
                                         </table>
-                                        <button className="sap-btn sap-btn-primary" ng-click="showNextTables(!showNextFlag)">Next</button>
+                                        <button className="sap-btn sap-btn-primary" onClick={this.showStep2.bind(this)}>
+                                            Next</button>
                                         <br />
                                     </div>
 
-                                    <table className="CTOOL-table table table-stripped table-condensed form-group hr-expanded" ng-if="showNextFlag">
-                                        <tbody>
-                                            <tr>
-                                                <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Requester</label></td>
-                                                <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>json.requester</label></td>
-                                            </tr>
-                                            <tr>
-                                                <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Account Manager</label></td>
-                                                <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>json.acctMgr.name</label></td>
-                                            </tr>
+                                    <div className={"showSection-" + !this.state.step1}>
 
-                                            <tr>
-                                                <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Company</label></td>
-                                                <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>json.company</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Billing Location</label></td>
-                                                <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>json.billingLocation</label></td>
-                                            </tr>
-                                            <tr>
-                                                <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Service Level</label></td>
-                                                <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>json.serviceLevel</label></td>
-                                            </tr>
-                                            <tr>
-                                                <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Traffic Type</label></td>
-                                                <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>json.trafficType</label></td>
-                                            </tr>
-                                            <tr>
-                                                <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Revenue Sharing</label></td>
-                                                <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>No</label></td>
-                                            </tr>
+                                        <table className="CTOOL-table table table-stripped table-condensed form-group hr-expanded">
+                                            <tbody>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Requester</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>{this.state.json.requesterName}</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Account Manager</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>{this.state.json.acctMgr.name}</label></td>
+                                                </tr>
 
-                                        </tbody>
-                                    </table>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Company</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>{this.state.json.company}</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Billing Location</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>{this.state.json.billingLocation}</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Service Level</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>{this.state.json.serviceLevel}</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Traffic Type</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>{this.state.json.trafficType}</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Revenue Sharing</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>No</label></td>
+                                                </tr>
 
+                                            </tbody>
+                                        </table>
 
+                                    </div>
 
                                 </div>
 
 
-                                <div ng-className="getTables" id="second-level">
+                                <div className={"showSection-" + !this.state.step1} id="second-level">
                                     <div className='content'>
 
                                         <h4 className="breadcrumbs">Technical Details</h4>
@@ -306,7 +391,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                                                                <select className="form-control" id="sel6"
+                                                                <select className="form-control" ref="sel6"
                                                                     ng-change="updateTechnicalDetails()">
                                                                     <option>a</option>
                                                                 </select>
@@ -325,7 +410,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-10 col-xs-12">
-                                                                <input className="form-control" type="text" name="name" required="Please enter name." ng-model="json.contact.name"></input>
+                                                                <input className="form-control" type="text" name="name"  ng-model="this.state.json.contact.name"></input>
                                                             </div>
                                                             <div className="col-lg-6 col-md-6 col-sm-1 col-xs-12"><label>(NEW)</label></div>
                                                         </div>
@@ -336,7 +421,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <input className="form-control" type="email" name="email" ng-model="json.contact.email" required></input>
+                                                                <input className="form-control" type="email" name="email" ng-model="this.state.json.contact.email"></input>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -346,7 +431,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <select className="form-control" id="sel7" ng-model="json.country">
+                                                                <select className="form-control" ref="sel7" ng-model="this.state.json.country">
                                                                     <option>a</option>
                                                                 </select>
                                                             </div>
@@ -358,7 +443,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <input className="form-control" type="text" ng-model="json.contact.mobilePhoneNumber"></input>
+                                                                <input className="form-control" type="text" ng-model="this.state.json.contact.mobilePhoneNumber"></input>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -379,8 +464,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <input className="form-control" type="text" required=""
-                                                                    ng-model="json.techName" name="technicalName"></input>
+                                                                <input className="form-control" type="text" 
+                                                                    value="this.state.json.techName" name="technicalName"></input>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -390,7 +475,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <input className="form-control" type="text" ng-model="json.commercialName"></input>
+                                                                <input className="form-control" type="text" 
+                                                                        value="this.state.json.commercialName"></input>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -400,7 +486,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-3 col-md-3 col-sm-9 col-xs-12">
-                                                                <select className="form-control" id="sel8">
+                                                                <select className="form-control" ref="sel8">
                                                                     {listExistingAccounts}
                                                                 </select>
                                                             </div>
@@ -415,7 +501,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                                                <select className="form-control" id="sel9">
+                                                                <select className="form-control" ref="sel9">
                                                                     {listInterface}
                                                                 </select>
                                                             </div>
@@ -434,7 +520,7 @@ export default class CreateAccount extends React.Component {
                                 </div>
                             </div>
                             <div className="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
-                        </form>
+                        
                     </section>
                 </div>
 
