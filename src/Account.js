@@ -7,9 +7,135 @@ import './App.css';
 export default class CreateAccount extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.state = {};
+        this.state.commercial = {};
+        this.state.account = {};
+        this.state.technical = {};
+        this.state.commercial.users = [
+            {
+                name: 'Adam Gilli',
+                id: 1
+            },
+            {
+                name: 'Ricky Punter',
+                id: 2
+            },
+            {
+                name: 'Optimus Prime',
+                id: 3
+            },
+            {
+                name: 'Peter Parker',
+                id: 4
+            }
+        ];
+
+
+        this.state.commercial.company = ['10 GRAD(37669)', '100 BEST(39551)', '10DUKE (38660)', '118811 (39258)'];
+        this.state.commercial.billingLocation = ["Mobile 365 Inc.", "Mobile 365 South Africa.", "Mobileway Australia", "Mobileway China", "Mobileway India"];
+        this.state.commercial.serviceLevel = ['Standard', 'Premium'];
+        this.state.commercial.trafficType = ['General', 'Campaign', 'Low Latency', 'Time Sensitive'];
+        this.state.account.interfaceType = ['HTTP', 'SMPP', 'SMTP'];
+        this.state.country = ['India', 'United States Of America', 'Russia', 'Germany', 'China'];
+        this.state.requesterName = 'Venkat';
+        this.state.technical.contacts = [
+            {
+                id: 100,
+                contactName: 'xor',
+                name: 'Xoriant',
+                email: 'email@xoriant.com',
+                country: this.state.country[0],
+                mobilePhoneNumber: '12324564789',
+                directPhoneNumber: '123456789'
+            },
+            {
+                id: 101,
+                contactName: 'CTS',
+                name: 'Cognizant',
+                email: 'email@Cognizant.com',
+                country: this.state.country[4],
+                mobilePhoneNumber: '123456789',
+                directPhoneNumber: '12345645'
+            },
+            {
+                id: 102,
+                contactName: 'TCS',
+                name: 'Tata Consultancy Services',
+                email: 'email@tcs.com',
+                country: this.state.country[2],
+                mobilePhoneNumber: '1234567890',
+                directPhoneNumber: '678967'
+            },
+            {
+                id: 103,
+                contactName: 'acc',
+                name: 'Accenture',
+                email: 'email@Accenture.com',
+                country: this.state.country[3],
+                mobilePhoneNumber: '9876543211',
+                directPhoneNumber: '8967890'
+            },
+            {
+                id: 104,
+                contactName: 'cyb',
+                name: 'Cybage',
+                email: 'email@Cybage.com',
+                country: this.state.country[5],
+                mobilePhoneNumber: '98765437654',
+                directPhoneNumber: '54411653'
+            }
+        ];
+
+        this.state.existingAccounts = ['118118_Bulk_HTTP', '118119_Bulk_HTTP', '1181520_Bulk_HTTP', '118121_Bulk_HTTP'];
+
+
+
     }
 
     render() {
+
+        var listUsers = this.state.commercial.users.map(function (user) {
+            return (
+                <option key={user.name} value={user.name}>{user.name}</option>
+            );
+        });
+
+        var listCompany = this.state.commercial.company.map(function (company) {
+            return (
+                <option key={company} value={company}>{company}</option>
+            );
+        });
+
+        var listBilingLocation = this.state.commercial.billingLocation.map(function(location){
+            return (
+                <option key={location} value={location}>{location}</option>
+            );
+        }) 
+
+        var listServiceLevel = this.state.commercial.serviceLevel.map(function(level){
+            return (
+                <option key={level} value={level}>{level}</option>
+            );
+        }) 
+
+        var listTrafficType = this.state.commercial.trafficType.map(function(traffic){
+            return (
+                <option key={traffic} value={traffic}>{traffic}</option>
+            );
+        }) 
+
+        var listExistingAccounts = this.state.existingAccounts.map(function(account){
+            return (
+                <option key={account} value={account}>{account}</option>
+            );
+        }) 
+
+        var listInterface =  this.state.account.interfaceType.map(function(type){
+            return (
+                <option key={type} value={type}>{type}</option>
+            );
+        }) 
+
         return (
             <div className="other-than-main">
                 <nav className="navbar navbar-default navbar-static-top navbar-inverse">
@@ -54,17 +180,16 @@ export default class CreateAccount extends React.Component {
                                             <tbody>
                                                 <tr>
                                                     <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label>Requester</label></td>
-                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label> json.requester</label></td>
+                                                    <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9"><label>{this.state.requesterName}</label></td>
                                                 </tr>
                                                 <tr>
                                                     <td className="col-md-3 col-sm-3 col-lg-3 col-xs-3"><label> Account Manager</label></td>
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                                <select className="form-control" id="sel1"
-                                                                    ng-options="opt.name for opt in commercial.users"
-                                                                    ng-model="json.acctMgr"></select>
-
+                                                                <select className="form-control" id="sel1">
+                                                                    {listUsers}
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -75,9 +200,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                                                                <select className="form-control" id="sel2"
-                                                                    ng-model="json.company">
-                                                                    <option ng-repeat="option in commercial.company">option</option>
+                                                                <select className="form-control" id="sel2">
+                                                                    {listCompany}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -88,9 +212,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                                <select className="form-control" id="sel3"
-                                                                    ng-model="json.billingLocation">
-                                                                    <option ng-repeat="option in commercial.billingLocation">option</option>
+                                                                <select className="form-control" id="sel3">
+                                                                    {listBilingLocation}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -101,9 +224,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                                                                <select className="form-control" id="sel4"
-                                                                    ng-model="json.serviceLevel">
-                                                                    <option ng-repeat="option in commercial.serviceLevel">option</option>
+                                                                <select className="form-control" id="sel4">
+                                                                    {listServiceLevel}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -114,9 +236,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                                                                <select className="form-control" id="sel5"
-                                                                    ng-model="json.trafficType">
-                                                                    <option ng-repeat="option in commercial.trafficType">option</option>
+                                                                <select className="form-control" id="sel5">
+                                                                    {listTrafficType}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -260,7 +381,6 @@ export default class CreateAccount extends React.Component {
                                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <input className="form-control" type="text" required=""
                                                                     ng-model="json.techName" name="technicalName"></input>
-                                                                <span className="error" ng-show="ctoolControllerForm.technicalName.$touched && ctoolControllerForm.technicalName.$invalid">Please enter technical name.</span>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -280,8 +400,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-3 col-md-3 col-sm-9 col-xs-12">
-                                                                <select className="form-control" id="sel8" ng-model="json.existingAccount">
-                                                                    <option ng-repeat="option in existingAccounts"> option </option>
+                                                                <select className="form-control" id="sel8">
+                                                                    {listExistingAccounts}
                                                                 </select>
                                                             </div>
                                                             <div className=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -295,9 +415,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                                                <select className="form-control" id="sel9"
-                                                                    ng-model="json.interfaceType">
-                                                                    <option ng-repeat="option in account.interfaceType"> option </option>
+                                                                <select className="form-control" id="sel9">
+                                                                    {listInterface}
                                                                 </select>
                                                             </div>
                                                         </div>
