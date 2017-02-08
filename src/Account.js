@@ -13,6 +13,23 @@ export default class CreateAccount extends React.Component {
         this.state.account = {};
         this.state.technical = {};
         this.state.json = {};
+    }
+
+     componentWillMount(props){
+        // this.setState({
+        //     commercial: {},
+        //     step1: true,
+        //     account: {},
+        //     technical: {},
+        //     json: {}
+        // });
+        console.log("this.state ---- ", this.state);
+        // this.state = {};
+        // this.state.commercial = {};
+        // this.state.step1 = true;
+        // this.state.account = {};
+        // this.state.technical = {};
+        // this.state.json = {};
         this.state.commercial.users = [
             {
                 name: 'Adam Gilli',
@@ -40,53 +57,56 @@ export default class CreateAccount extends React.Component {
         this.state.account.interfaceType = ['HTTP', 'SMPP', 'SMTP'];
         this.state.country = ['India', 'United States Of America', 'Russia', 'Germany', 'China'];
         this.state.requesterName = 'Venkat';
-        this.state.technical.contacts = [
-            {
-                id: 100,
-                contactName: 'xor',
-                name: 'Xoriant',
-                email: 'email@xoriant.com',
-                country: this.state.country[0],
-                mobilePhoneNumber: '12324564789',
-                directPhoneNumber: '123456789'
-            },
-            {
-                id: 101,
-                contactName: 'CTS',
-                name: 'Cognizant',
-                email: 'email@Cognizant.com',
-                country: this.state.country[4],
-                mobilePhoneNumber: '123456789',
-                directPhoneNumber: '12345645'
-            },
-            {
-                id: 102,
-                contactName: 'TCS',
-                name: 'Tata Consultancy Services',
-                email: 'email@tcs.com',
-                country: this.state.country[2],
-                mobilePhoneNumber: '1234567890',
-                directPhoneNumber: '678967'
-            },
-            {
-                id: 103,
-                contactName: 'acc',
-                name: 'Accenture',
-                email: 'email@Accenture.com',
-                country: this.state.country[3],
-                mobilePhoneNumber: '9876543211',
-                directPhoneNumber: '8967890'
-            },
-            {
-                id: 104,
-                contactName: 'cyb',
-                name: 'Cybage',
-                email: 'email@Cybage.com',
-                country: this.state.country[5],
-                mobilePhoneNumber: '98765437654',
-                directPhoneNumber: '54411653'
-            }
-        ];
+        this.state.technical.contact = ['Xor', 'CTS', 'TCS', 'Infi', 'Cyb'];
+        this.state.technical.contactName = ['Xoriant', 'Cognizant Technology Services', 'Tata Consultancy Services', 'Infosys', 'Cybage'];
+        this.state.technical.email = ['email@xoriant.com', 'email@Cognizant.com', 'email@tcs.com', 'email@Accenture.com', 'email@Cybage.com'];
+        // this.state.technical.contacts = [
+        //     {
+        //         id: 100,
+        //         contactName: 'xor',
+        //         name: 'Xoriant',
+        //         email: 'email@xoriant.com',
+        //         country: this.state.country[0],
+        //         mobilePhoneNumber: '12324564789',
+        //         directPhoneNumber: '123456789'
+        //     },
+        //     {
+        //         id: 101,
+        //         contactName: 'CTS',
+        //         name: 'Cognizant',
+        //         email: 'email@Cognizant.com',
+        //         country: this.state.country[4],
+        //         mobilePhoneNumber: '123456789',
+        //         directPhoneNumber: '12345645'
+        //     },
+        //     {
+        //         id: 102,
+        //         contactName: 'TCS',
+        //         name: 'Tata Consultancy Services',
+        //         email: 'email@tcs.com',
+        //         country: this.state.country[2],
+        //         mobilePhoneNumber: '1234567890',
+        //         directPhoneNumber: '678967'
+        //     },
+        //     {
+        //         id: 103,
+        //         contactName: 'acc',
+        //         name: 'Accenture',
+        //         email: 'email@Accenture.com',
+        //         country: this.state.country[3],
+        //         mobilePhoneNumber: '9876543211',
+        //         directPhoneNumber: '8967890'
+        //     },
+        //     {
+        //         id: 104,
+        //         contactName: 'cyb',
+        //         name: 'Cybage',
+        //         email: 'email@Cybage.com',
+        //         country: this.state.country[5],
+        //         mobilePhoneNumber: '98765437654',
+        //         directPhoneNumber: '54411653'
+        //     }
+        // ];
 
         this.state.existingAccounts = ['118118_Bulk_HTTP', '118119_Bulk_HTTP', '1181520_Bulk_HTTP', '118121_Bulk_HTTP'];
         this.state.json = {
@@ -98,12 +118,19 @@ export default class CreateAccount extends React.Component {
             trafficType: this.state.commercial.trafficType[0],
             interfaceType: this.state.account.interfaceType[0],
             techName: null,
-            existingCompany: "Xoriant sol.",
-            contact: 'saca',
-            existingAccount: this.state.existingAccounts[0]
-
+            commercialName: null,
+            existingCompany: "Xoriant sol.",            
+            existingAccount: this.state.existingAccounts[0],
+            contact: {
+                contact: this.state.technical.contact[0],            
+                name: 'Xoriant',
+                email: 'email@xoriant.com',
+                country: this.state.country[0],
+                mobilePhoneNumber: '12324564789',
+                directPhoneNumber: '123456789'
+            }
         }
-    }
+     }
 
     handleChange(name, event) {
         // this.setState({value: event.target.value});
@@ -210,6 +237,30 @@ export default class CreateAccount extends React.Component {
         var listInterface = this.state.account.interfaceType.map(function (type) {
             return (
                 <option key={type} value={type}>{type}</option>
+            );
+        })
+
+        var listCountry = this.state.country.map(function (country) {
+            return (
+                <option key={country} value={country}>{country}</option>
+            );
+        })
+
+        var listContactName = this.state.technical.contactName.map(function (contact) {
+            return (
+                <option key={contact} value={contact}>{contact}</option>
+            );
+        })
+
+        var listContact = this.state.technical.contact.map(function (contact) {
+            return (
+                <option key={contact} value={contact}>{contact}</option>
+            );
+        })
+
+        var listContactEmail = this.state.technical.email.map(function (contact) {
+            return (
+                <option key={contact} value={contact}>{contact}</option>
             );
         })
 
@@ -391,9 +442,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                                                                <select className="form-control" ref="sel6"
-                                                                    ng-change="updateTechnicalDetails()">
-                                                                    <option>a</option>
+                                                                <select className="form-control" ref="sel6">
+                                                                    {listCompany}
                                                                 </select>
                                                             </div>
                                                             <div className="col-lg-3 col-md-3 col-sm-4 col-xs-12">
@@ -410,7 +460,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-10 col-xs-12">
-                                                                <input className="form-control" type="text" name="name"  ng-model="this.state.json.contact.name"></input>
+                                                                <input className="form-control" type="text" name="name"  value={this.state.json.contact.name}></input>
                                                             </div>
                                                             <div className="col-lg-6 col-md-6 col-sm-1 col-xs-12"><label>(NEW)</label></div>
                                                         </div>
@@ -421,7 +471,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <input className="form-control" type="email" name="email" ng-model="this.state.json.contact.email"></input>
+                                                                <input className="form-control" type="email" name="email" value={this.state.json.contact.email}></input>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -431,8 +481,8 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <select className="form-control" ref="sel7" ng-model="this.state.json.country">
-                                                                    <option>a</option>
+                                                                <select className="form-control" ref="sel7" value={this.state.json.country}>
+                                                                    {listCountry}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -443,7 +493,7 @@ export default class CreateAccount extends React.Component {
                                                     <td className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                                                         <div className="row">
                                                             <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                                <input className="form-control" type="text" ng-model="this.state.json.contact.mobilePhoneNumber"></input>
+                                                                <input className="form-control" type="text" value={this.state.json.contact.mobilePhoneNumber}></input>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -465,7 +515,7 @@ export default class CreateAccount extends React.Component {
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <input className="form-control" type="text" 
-                                                                    value="this.state.json.techName" name="technicalName"></input>
+                                                                    value={this.state.json.techName} name="technicalName"></input>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -476,7 +526,7 @@ export default class CreateAccount extends React.Component {
                                                         <div className="row">
                                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                                 <input className="form-control" type="text" 
-                                                                        value="this.state.json.commercialName"></input>
+                                                                        value={this.state.json.commercialName}></input>
                                                             </div>
                                                         </div>
                                                     </td>
